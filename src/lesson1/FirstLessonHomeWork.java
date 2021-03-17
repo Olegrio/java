@@ -21,16 +21,17 @@ public class FirstLessonHomeWork {
         int number = 83;
         int numberSum = (number / 10) // 1 цифра
                 + (number - (number / 10) * 10); // 2 цифра
-        System.out.println("Task 3: sum = " + numberSum);
+        System.out.println("Task 3: numberSum = " + numberSum);
+
 
        /* 4. Задача на арифметические операторы
         Найти сумму цифр 3х значного числа*/
 
         int numberTwo = 578;
-        int numberSumTwo = (numberTwo / 100) // 1 цифра
+        int numberTwoSum = (numberTwo / 100) // 1 цифра
                 + (numberTwo / 10) - (numberTwo / 100) * 10 // 2 цифра
                 + numberTwo - (numberTwo / 10) * 10; // 3 цифра
 
-        System.out.println("Task 4: sumTwo = " + numberSumTwo);
+        System.out.println("Task 4: sumTwo = " + numberTwoSum);
     }
 }
