@@ -17,6 +17,7 @@ public class FirstLessonHomeWork {
 
        /* 3. Задача на арифметические операторы
         Найти сумму цифр 2х значного числа*/
+        // Возможно number задать тип byte
 
         int number = 83;
         int numberSum = (number / 10) // 1 цифра
