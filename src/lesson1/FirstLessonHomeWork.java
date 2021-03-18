@@ -19,7 +19,7 @@ public class FirstLessonHomeWork {
         Найти сумму цифр 2х значного числа*/
         // Возможно number задать тип byte
 
-        int number = 83;
+        int number = 45;
         int numberSum = (number / 10) // 1 цифра
                 + (number - (number / 10) * 10); // 2 цифра
         System.out.println("Task 3: numberSum = " + numberSum);
@@ -28,7 +28,7 @@ public class FirstLessonHomeWork {
        /* 4. Задача на арифметические операторы
         Найти сумму цифр 3х значного числа*/
 
-        int numberTwo = 578;
+        int numberTwo = 121;
         int numberTwoSum = (numberTwo / 100) // 1 цифра
                 + (numberTwo / 10) - (numberTwo / 100) * 10 // 2 цифра
                 + numberTwo - (numberTwo / 10) * 10; // 3 цифра
