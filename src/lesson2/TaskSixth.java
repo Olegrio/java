@@ -34,7 +34,6 @@ public class TaskSixth {
                 } else {
                     max = (max - min)/2 + min;
                 }
-                System.out.println(min + "," + max);
                 randomNum = (int)((Math.random() * (max - min + 1)) + min);
             }
         }
