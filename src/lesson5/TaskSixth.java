@@ -11,7 +11,7 @@ public class TaskSixth {
         String string = in.nextLine();
 
         System.out.println("Введите букву для поиска");
-        String letter = in.nextLine();
+        String letter = in.nextLine().toLowerCase();
 
         String[] arrayString = string.split(" ");
         int count = 0;
