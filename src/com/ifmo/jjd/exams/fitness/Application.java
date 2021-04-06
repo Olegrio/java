@@ -23,7 +23,6 @@ public class Application {
         Pass pass5 = new Pass(PassType.FULL, visitor5);
         Pass pass6 = new Pass(PassType.FULL, visitor6);
 
-
-        System.out.println(fitnessHall.visit(pass1, HallZone.GYM));
+        fitnessHall.visit(pass1, HallZone.GYM);
     }
 }

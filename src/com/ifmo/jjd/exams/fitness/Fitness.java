@@ -21,12 +21,18 @@ public class Fitness {
     private int countPool = 0;
     private int countGroup = 0;
 
-    public String visit(Pass pass, HallZone zone){
+    /**
+     * Посещение спортзала
+     * @param pass абонемент
+     * @param zone зона посещения
+     */
+    public void visit(Pass pass, HallZone zone){
         String response;
         switch (zone){
             case GYM:
                 if(countGym >= maxCountHall){
-                    return GYM.getName() + " - " + Answers.HALL_COMPLETE;
+                    System.out.println(GYM.getName() + " - " + Answers.HALL_COMPLETE);
+                    break;
                 }
                 response = checkPassType(pass, GYM);
                 if (response.equals(Answers.APPROVED)) {
@@ -34,10 +40,12 @@ public class Fitness {
                     countGym++;
                     System.out.println(getSmallInfo(pass, GYM));
                 }
-                return response;
+                System.out.println(response);
+                break;
             case POOL:
                 if(countPool >= maxCountHall){
-                    return POOL.getName() + " - " + Answers.HALL_COMPLETE;
+                    System.out.println(POOL.getName() + " - " + Answers.HALL_COMPLETE);
+                    break;
                 }
                 response = checkPassType(pass, POOL);
                 if (response.equals(Answers.APPROVED)) {
@@ -45,23 +53,31 @@ public class Fitness {
                     countPool++;
                     System.out.println(getSmallInfo(pass, POOL));
                 }
-                return response;
+                System.out.println(response);
+                break;
             case GROUP:
                 if(countGroup >= maxCountHall){
-                    return GROUP.getName() + " - " + Answers.HALL_COMPLETE;
+                    System.out.println(GROUP.getName() + " - " + Answers.HALL_COMPLETE);
+                    break;
                 }
                 response = checkPassType(pass, GROUP);
                 if (response.equals(Answers.APPROVED)) {
                     addPassToZone(pass, groupPass);
                     countGroup++;
                     System.out.println(getSmallInfo(pass, GROUP));
-                    return Answers.APPROVED;
+                    System.out.println(Answers.APPROVED);
+                    break;
                 }
-                return response;
-            default: return Answers.NOT_APPROVED;
+                System.out.println(response);
+                break;
+            default:
+                System.out.println(Answers.NOT_APPROVED);
         }
     }
 
+    /**
+     * Закрытие фитнеса
+     */
     public void closeFitness(){
         gymPass = new Pass[maxCountHall];
         poolPass = new Pass[maxCountHall];
@@ -70,6 +86,11 @@ public class Fitness {
         int countGym, countPool, countGroup = 0;
     }
 
+    /**
+     * Добавление абонемена в массив содержащий посетителей зоны
+     * @param pass абонемент
+     * @param group массив с текущими посетителями зоны
+     */
     private void addPassToZone(Pass pass, Pass[] group){
         for (int i = 0; i < group.length; i++) {
             if(Objects.isNull(group[i])){
@@ -79,6 +100,12 @@ public class Fitness {
         }
     }
 
+    /**
+     * Проверка типа абонемента с дальнейшей передачей в метод checkPass для проверки возможности посещения по данному абонементу той или иной зоны
+     * @param pass абонемент
+     * @param zone зона посещения
+     * @return возвращает строку Settings.Answers c причиной отказа или возможностью пройти
+     */
     private String checkPassType(Pass pass, HallZone zone){
         if(pass.getEndDate().isBefore(LocalDateTime.now())){
             return  Answers.PASS_ENDED;
@@ -113,9 +140,18 @@ public class Fitness {
         }
     }
 
+    /**
+     * Проверка возможности посещения по данному абонементу той или иной зоны
+     * @param zone зона посещения
+     * @param pass абонемент
+     * @param gymHours доступные по абонементу из Settings.Settings часы посещения тренажерного зала
+     * @param poolHours доступные по абонементу из Settings.Settings часы посещения бассейна
+     * @param groupHours доступные по абонементу из Settings.Settings часы посещения групповых занятий
+     * @return возвращает строку Settings.Answers c причиной отказа или возможностью пройти
+     */
     private String checkPass(HallZone zone, Pass pass, int[] gymHours, int[] poolHours, int[] groupHours){
         int currentHour = LocalDateTime.now().getHour();
-        if(!checkPassZones(pass)) {
+        if(checkPassZones(pass)) {
             return Answers.PASS_ALREADY_EXISTS;
         }
         switch (zone) {
@@ -154,28 +190,62 @@ public class Fitness {
         }
     }
 
+
+    /**
+     * проверка на наличие регистрации абонемента в других зонах
+     * @param pass абонемент
+     * @return true - зарегестрирован в тругих зонах. false - нет
+     */
     private boolean checkPassZones(Pass pass){
         for (Pass item : gymPass) {
             if(item != null && item.getUuid().equals(pass.getUuid())){
-                return false;
+                return true;
             }
         }
         for (Pass item : poolPass) {
             if(item != null && item.getUuid().equals(pass.getUuid())){
-                return false;
+                return true;
             }
         }
         for (Pass item : groupPass) {
             if(item != null && item.getUuid().equals(pass.getUuid())){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
+    /**
+     * Покинуть зону занятий, ищет и удаляет абонемент из массива занимающихся в зоне
+     * @param pass абонемент
+     */
+    public void leaveTheHallZone(Pass pass){
+        for (int i = 0; i < gymPass.length; i++) {
+            if(gymPass[i] != null && gymPass[i].getUuid().equals(pass.getUuid())){
+                gymPass[i] = null;
+            }
+        }
+        for (int i = 0; i < poolPass.length; i++) {
+            if(poolPass[i] != null && poolPass[i].getUuid().equals(pass.getUuid())){
+                poolPass[i] = null;
+            }
+        }
+        for (int i = 0; i < groupPass.length; i++) {
+            if(groupPass[i] != null && groupPass[i].getUuid().equals(pass.getUuid())){
+                groupPass[i] = null;
+            }
+        }
+    }
+
+    /**
+     * Формирование строки с краткой информацией по посещению
+     * @param pass абонемент
+     * @param zone зона посещения
+     * @return
+     */
     public String getSmallInfo(Pass pass,HallZone zone){
         return "Фамилия: " + pass.getOwner().getSurname() + ", Имя: " + pass.getOwner().getName() + "\n" +
-                "Посетил: " + zone.getName() + "\n" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy в hh:mm"));
+                "Посетил: " + zone.getName() + "\n" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy в HH:mm"));
 
     }
 
