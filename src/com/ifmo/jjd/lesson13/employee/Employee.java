@@ -1,16 +1,15 @@
 package com.ifmo.jjd.lesson13.employee;
 
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Employee {
     private String name;
     private String company;
     private int salary;
     private int age;
+    private UUID uuid = UUID.randomUUID();;
 
     // TODO: конструктор, геттеры и сеттеры
 
@@ -19,6 +18,10 @@ public class Employee {
         this.company = company;
         this.salary = salary;
         this.age = age;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     @Override
@@ -106,9 +109,13 @@ public class Employee {
 
             employees.add(new Employee(names[randomNameIndex], companies[randomCompanyIndex], randomSalary, randomAge)); // TODO: объекты создавать с рандомными значениями. Возраст от 21 до 60 и не забудьте про зп
         }
+
         return employees;
     }
 
+    /**
+     * сортировка по имени
+     */
     public static class NameComparator implements Comparator<Employee> {
         @Override
         public int compare(Employee o1, Employee o2) {
@@ -116,15 +123,9 @@ public class Employee {
         }
     }
 
-    public static class OnlyNameComparator implements Comparator<Employee> {
-        @Override
-        public int compare(Employee o1, Employee o2) {
-            return o1.name.compareToIgnoreCase(o2.name) == 0
-                    ? -1
-                    : o1.name.compareToIgnoreCase(o2.name);
-        }
-    }
-
+    /**
+     * сортировка по компании
+     */
     public static class CompanyComparator implements Comparator<Employee> {
         @Override
         public int compare(Employee o1, Employee o2) {
@@ -132,6 +133,9 @@ public class Employee {
         }
     }
 
+    /**
+     * сортировка по зарплате
+     */
     public static class SalaryComparator implements Comparator<Employee> {
         @Override
         public int compare(Employee o1, Employee o2) {
@@ -139,10 +143,23 @@ public class Employee {
         }
     }
 
+    /**
+     * сортировка по возрасту
+     */
     public static class AgeComparator implements Comparator<Employee> {
         @Override
         public int compare(Employee o1, Employee o2) {
             return Integer.compare(o1.age, o2.age);
+        }
+    }
+
+    /**
+     * окончательняа сортировка по uuid для избежания удаления объектов с одинкаовыми полями сортиовки
+     */
+    public static class FinalComparator implements Comparator<Employee> {
+        @Override
+        public int compare(Employee o1, Employee o2) {
+            return o1.uuid.compareTo(o2.uuid);
         }
     }
 }

@@ -1,9 +1,6 @@
 package com.ifmo.jjd.lesson13.message;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class Message {
@@ -51,7 +48,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "\nMessage{" +
                 "code=" + code +
                 ", priority=" + priority +
                 '}';

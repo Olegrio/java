@@ -8,29 +8,39 @@ public class EmployeeTask {
     public static void main(String[] args) {
         List<Employee> employees = Employee.employeeGenerator(20);
 
+
         // сортировка по имени
-        Comparator<Employee> employeeNameComparator = new Employee.OnlyNameComparator();
-        TreeSet<Employee> nameSortingEmployeeList = new TreeSet<>(employeeNameComparator);
+        Comparator<Employee> nameComparator = new Employee.NameComparator()
+                .thenComparing(new Employee.FinalComparator());
+        TreeSet<Employee> nameSortingEmployeeList = new TreeSet<>(nameComparator);
         nameSortingEmployeeList.addAll(employees);
+
+
+        // сортировка по имени и зарплате
+        Comparator<Employee> nameAndSalaryComparator = new Employee.NameComparator()
+                .thenComparing(new Employee.SalaryComparator())
+                .thenComparing(new Employee.FinalComparator());
+        TreeSet<Employee> nameAndSalarySortingEmployeeList = new TreeSet<>(nameAndSalaryComparator);
+        nameAndSalarySortingEmployeeList.addAll(employees);
+
+
+        // сортировка по имени, зарплате, возрасту и компании
+        Comparator<Employee> nameSalaryAgeCompanyComparator = new Employee.NameComparator()
+                .thenComparing(new Employee.SalaryComparator())
+                .thenComparing(new Employee.AgeComparator())
+                .thenComparing(new Employee.CompanyComparator())
+                .thenComparing(new Employee.FinalComparator());
+        TreeSet<Employee> nameSalaryAgeCompanySortingEmployeeList = new TreeSet<>(nameSalaryAgeCompanyComparator);
+        nameSalaryAgeCompanySortingEmployeeList.addAll(employees);
+
+
         System.out.println("По имени");
         System.out.println(nameSortingEmployeeList);
 
-        // сортировка по имени и зарплате
-        Comparator<Employee> employeeNameAndSalaryComparator = new Employee.NameComparator()
-                .thenComparing(new Employee.SalaryComparator());
-        TreeSet<Employee> nameAndSalarySortingEmployeeList = new TreeSet<>(employeeNameAndSalaryComparator);
-        nameAndSalarySortingEmployeeList.addAll(employees);
         System.out.println("По имени и зарплате");
         System.out.println(nameAndSalarySortingEmployeeList);
 
 
-        // сортировка по имени, зарплате, возрасту и компании
-        Comparator<Employee> employeeNameSalaryAgeCompanyComparator = new Employee.NameComparator()
-                .thenComparing(new Employee.SalaryComparator())
-                .thenComparing(new Employee.AgeComparator())
-                .thenComparing(new Employee.CompanyComparator());
-        TreeSet<Employee> nameSalaryAgeCompanySortingEmployeeList = new TreeSet<>(employeeNameSalaryAgeCompanyComparator);
-        nameSalaryAgeCompanySortingEmployeeList.addAll(employees);
         System.out.println("По имени, зарплате, возрасту и компании");
         System.out.println(nameSalaryAgeCompanySortingEmployeeList);
 
