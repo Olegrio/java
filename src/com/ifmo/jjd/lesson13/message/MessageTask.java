@@ -10,13 +10,17 @@ public class MessageTask {
         // TODO:  Подсчитать количество сообщений для каждого приоритела
         //  Ответ в консоль
         int[] priorityCount = new int[Message.MessagePriority.values().length];
-        for (int i = 0; i < priorityCount.length; i++) {
-            for (Message message : messageList) {
-                if(message.getPriority().equals(Message.MessagePriority.getPriority(i))){
-                    priorityCount[i] += 1;
-                }
-            }
+        for (Message message : messageList) {
+            priorityCount[message.getPriority().ordinal()]++;
         }
+
+//        for (int i = 0; i < priorityCount.length; i++) {
+//            for (Message message : messageList) {
+//                if(message.getPriority().equals(Message.MessagePriority.getPriority(i))){
+//                    priorityCount[i] += 1;
+//                }
+//            }
+//        }
         for (int i = 0; i < priorityCount.length; i++) {
             System.out.println(priorityCount[i] + " сообщений с приоритетом " + Message.MessagePriority.getPriority(i));
         }
@@ -25,23 +29,35 @@ public class MessageTask {
     public static void countEachCode(List<Message> messageList) {
         // TODO: Подсчитать количество сообщений для каждого кода сообщения
         //  Ответ в консоль
-        ArrayList<Integer> codeValues = new ArrayList<>();
-        ArrayList<Integer> codeValuesCount = new ArrayList<>();
-        int tempCodeValuesIndex;
+//        ArrayList<Integer> codeValues = new ArrayList<>();
+//        ArrayList<Integer> codeValuesCount = new ArrayList<>();
+//        int tempCodeValuesIndex;
+//        for (Message message : messageList) {
+//            if(codeValues.contains(message.getCode())){
+//                tempCodeValuesIndex = codeValues.indexOf(message.getCode());
+//                codeValuesCount.set(tempCodeValuesIndex, codeValuesCount.get(tempCodeValuesIndex) + 1);
+//            } else {
+//                codeValues.add(message.getCode());
+//                codeValuesCount.add(0);
+//            }
+//        }
+
+//        for (int i = 0; i < codeValues.size() - 1; i++) {
+//            tempCodeValuesIndex = codeValues.get(i);
+//            System.out.println(codeValuesCount.get(tempCodeValuesIndex) + " сообщений с кодом " + codeValues.get(i));
+//        }
+
+        HashMap<Integer, Integer> codeValues = new HashMap<>();
+
         for (Message message : messageList) {
-            if(codeValues.contains(message.getCode())){
-                tempCodeValuesIndex = codeValues.indexOf(message.getCode());
-                codeValuesCount.set(tempCodeValuesIndex, codeValuesCount.get(tempCodeValuesIndex) + 1);
-            } else {
-                codeValues.add(message.getCode());
-                codeValuesCount.add(0);
-            }
+            int value = codeValues.getOrDefault(message.getCode(), 0);
+            codeValues.put(message.getCode(), value + 1 );
         }
 
-        for (int i = 0; i < codeValues.size() - 1; i++) {
-            tempCodeValuesIndex = codeValues.get(i);
-            System.out.println(codeValuesCount.get(tempCodeValuesIndex) + " сообщений с кодом " + codeValues.get(i));
+        for(Map.Entry<Integer, Integer> entry: codeValues.entrySet()){
+            System.out.println(entry.getValue() + " сообщений с кодом " + entry.getKey());
         }
+
     }
 
     public static void uniqueMessageCount(List<Message> messageList) {
@@ -91,12 +107,12 @@ public class MessageTask {
 
     public static void main(String[] args) {
         List<Message> messages = Message.MessageGenerator.generate(34);
-        System.out.println(messages);
+        //System.out.println(messages);
 
         // вызов методов
 
         // countEachPriority(messages);
-        // countEachCode(messages);
+        countEachCode(messages);
         // uniqueMessageCount(messages);
         // System.out.println(uniqueMessagesInOriginalOrder(messages));
         // System.out.println(copyEach(messages, Message.MessagePriority.HIGH));
