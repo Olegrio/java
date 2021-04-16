@@ -72,13 +72,15 @@ public class MessageTask {
         //  Например, было: [{URGENT, 4}, {HIGH, 9}, {LOW, 3}, {HIGH, 9}]
         //  на выходе: [{URGENT, 4}, {HIGH, 9}, {LOW, 3}]
 
-        List<Message> result = new ArrayList<>();
-        for (Message message : messageList) {
-            if(!result.contains(message)) {
-                result.add(message);
-            }
-        }
-        return result;
+//        List<Message> result = new ArrayList<>();
+//        for (Message message : messageList) {
+//            if(!result.contains(message)) {
+//                result.add(message);
+//            }
+//        }
+//
+//        return result;
+        return new ArrayList<>(new LinkedHashSet<>(messageList));
     }
 
     public static List<Message> copyEach(List<Message> messageList, Message.MessagePriority priority) {
