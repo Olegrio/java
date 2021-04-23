@@ -22,6 +22,7 @@ public class PupilTask {
 
         // 2. Найти средний возраст учеников
         int averageAgePupils = pupils.stream().mapToInt(x -> LocalDateTime.now().getYear() - x.getBirthYear()).sum() / pupils.size();
+        double avgAge = pupils.stream().mapToInt(pupil -> LocalDate.now().getYear() - pupil.getBirth().getYear()).average().orElse(0);
         System.out.println(averageAgePupils);
         System.out.println("--------------------------");
 
@@ -52,7 +53,7 @@ public class PupilTask {
         ArrayList<Pupil> pupilsSorted = pupils.stream()
                 .sorted(Comparator.comparing(Pupil::getGender)
                         .thenComparing(Pupil::getBirth)
-                        .thenComparing(Pupil::getName).reversed()
+                        .thenComparing(Comparator.comparing(Pupil::getName).reversed())
                 ).collect(Collectors.toCollection(ArrayList::new));
 
         System.out.println(pupilsSorted);
