@@ -30,12 +30,13 @@ public class TransactionsTask {
 
         // TODO:: 1. собрать Map<String, Long>,
         //  где String - номер (number) аккаунта, Long - сумма транзакций (sum) по аккаунту
-        Map<String, Long> stringLongMap = transactionStream.collect(Collectors.groupingBy(x -> x.getAccount().getNumber(), Collectors.summingLong(Transaction::getSum)));
-        System.out.println(stringLongMap);
+        //Map<String, Long> stringLongMap = transactionStream.collect(Collectors.groupingBy(x -> x.getAccount().getNumber(), Collectors.summingLong(Transaction::getSum)));
+        //System.out.println(stringLongMap);
 
         
         // TODO: 2. найти сумму транзакций по каждому аккаунту
-        Long sum = transactionStream.mapToLong(Transaction::getSum).sum();
+        //Long sum = transactionStream.mapToLong(Transaction::getSum).sum();
+        Map<Account, Long> sum = transactionStream.collect(Collectors.toMap(Transaction::getAccount, Transaction::getSum, Long::sum));
         System.out.println(sum);
 
 
