@@ -8,7 +8,7 @@ public interface XorDecorator {
         byte[] result = new byte[text.length()];
 
         for (int i = 0; i < text.length(); i++) {
-            result[i] = (byte) (textBytes[i] ^ key[0]);
+            result[i] = (byte) (textBytes[i] ^ key[i % key.length]);
         }
 
         return result;
@@ -18,7 +18,7 @@ public interface XorDecorator {
         byte[] key = Settings.KEY.getBytes();
 
         for (int i = 0; i < text.length; i++) {
-            result[i] = (byte) (text[i] ^ key[0]);
+            result[i] = (byte) (text[i] ^ key[i % key.length]);
         }
 
         return new String(result);
