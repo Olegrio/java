@@ -18,7 +18,7 @@ import java.util.TreeSet;
 public class Server {
     private int port;
     private Connection connection;
-    private TreeSet<String> connections;
+    private TreeSet<String> connections = new TreeSet<>();
 
     public Server(int port) {
         this.port = port;
@@ -28,7 +28,7 @@ public class Server {
         try(ServerSocket serverSocket = new ServerSocket(port)){ // ожидание клиентских подключений
             System.out.println("Сервер запущен");
             while (true){
-                Socket newClient =  serverSocket.accept(); // момент установки соединения с клиентом
+                Socket newClient = serverSocket.accept(); // момент установки соединения с клиентом
                 connections.add(newClient.toString());
 
                 connection = new Connection(newClient);
