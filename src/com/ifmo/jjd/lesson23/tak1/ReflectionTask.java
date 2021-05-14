@@ -1,8 +1,6 @@
 package com.ifmo.jjd.lesson23.tak1;
 
 import java.lang.reflect.*;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class ReflectionTask {
     public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {

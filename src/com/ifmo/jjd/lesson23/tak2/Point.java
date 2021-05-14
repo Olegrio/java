@@ -3,9 +3,9 @@ package com.ifmo.jjd.lesson23.tak2;
 @Component(fileName = "point.properties", version = 2)
 public class Point {
     @Required
-    private int x;
+    public int x;
     @Required
-    private int y;
+    public int y;
 
     public int getX() {
         return x;
