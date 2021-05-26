@@ -17,18 +17,11 @@ public class Menu {
             this.items.add(item);
         });
     }
-
-    public boolean checkNumberActions(int numberAction){
-        boolean result = false;
-        for (MenuItems item : items) {
-            if (item.getNumberAction() == numberAction) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
+    /**
+     * Получения типа действия MenuItems по числу
+     * @param numberAction
+     * @return MenuItems
+     */
     public MenuItems getAction(int numberAction){
         MenuItems actions = null;
         for (MenuItems item : items) {
@@ -40,6 +33,9 @@ public class Menu {
         return actions;
     }
 
+    /**
+     * Вывод меню
+     */
     public void renderMenu(){
         System.out.println("----------------Меню----------------");
         items.forEach(item ->{
